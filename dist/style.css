@@ -1,0 +1,138 @@
+:root {
+      --dark-green: #386641;
+      --mid-green: #6a994e;
+      --light-green: #a7c957;
+      --cream: #f2e8cf;
+      --red-accent: #bc4749;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--dark-green);
+      line-height: 1.6;
+    }
+
+    header,
+    section,
+    footer {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .button {
+      background: var(--red-accent);
+      color: #fff;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 20px;
+      background-color: var(--light-green);
+      border-radius: 10px;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      background: var(--mid-green);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .section-title {
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--dark-green);
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .feature-box {
+      flex: 1 1 300px;
+      background: #fff;
+      border: 1px solid var(--mid-green);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .success,
+    .faq,
+    .partners,
+    .cta {
+      text-align: center;
+    }
+
+    .partner-logos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .cta {
+      background: var(--dark-green);
+      color: white;
+      padding: 80px 20px;
+      border-radius: 20px;
+    }
+
+    footer {
+      background: var(--dark-green);
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #f2e8cf;
+      margin: 0 5px;
+      text-decoration: none;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        flex-direction: row;
+        text-align: left;
+        justify-content: space-between;
+      }
+
+      .hero-text {
+        max-width: 600px;
+      }
+    }
