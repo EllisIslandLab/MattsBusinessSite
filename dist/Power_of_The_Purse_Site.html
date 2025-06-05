@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power of The Purse - Personal Finance with Matt Ellis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #66bd29;
+            --secondary-color: #4a8c1f;
+            --accent-color: #776f67;
+            --text-light: #ffffff;
+            --text-dark: #2c2c2c;
+            --bg-light: #f8fdf5;
+            --bg-dark: #1a1f16;
+            --card-light: rgba(255, 255, 255, 0.85);
+            --card-dark: rgba(26, 31, 22, 0.85);
+            --glass-light: rgba(255, 255, 255, 0.7);
+            --glass-dark: rgba(26, 31, 22, 0.7);
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--bg-light);
+            --text-color: var(--text-dark);
+            --card-bg: var(--card-light);
+            --glass-bg: var(--glass-light);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--bg-dark);
+            --text-color: var(--text-light);
+            --card-bg: var(--card-dark);
+            --glass-bg: var(--glass-dark);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fdf5, #e8f5e8, #d4edda);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #1a1f16, #2d4a1f, #1e3a1e);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: var(--glass-bg);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #2c2c2c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="dark"] .hero h1 {
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #2c2c2c;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        [data-theme="dark"] .hero p {
+            color: #ffffff;
+        }
+
+        .youtube-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .youtube-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.4);
+        }
+
+        /* Reviews Section */
+        .reviews {
+            padding: 4rem 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 20px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c2c2c;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="dark"] .section-title {
+            color: #ffffff;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .leave-review-btn {
+            display: block;
+            width: fit-content;
+            margin: 2rem auto 0;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);
+        }
+
+        .leave-review-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.4);
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 4rem 0;
+            text-align: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 20px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #2c2c2c;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        [data-theme="dark"] .cta h2 {
+            color: #ffffff;
+        }
+
+        .book-btn {
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            color: white;
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.3);
+        }
+
+        .book-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            padding: 4rem 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 20px;
+            display: none;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .day-column {
+            text-align: center;
+        }
+
+        .day-header {
+            font-weight: bold;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .time-slot {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .time-slot:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .time-slot.booked {
+            background: #ef4444;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .time-slot.booked:hover {
+            transform: none;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-btn {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(37, 99, 235, 0.6); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Power of The Purse</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#channels">Other Channels</a></li>
+                <li><a href="#booking">Booking Calendar</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Power of The Purse<br>Personal Finance with Matt Ellis</h1>
+            <p>Transform your financial future with expert coaching and proven strategies</p>
+            <a href="https://youtube.com/@mattellisfinance" class="youtube-button" target="_blank">
+                📺 Watch My YouTube Channel
+            </a>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">What My Clients Say</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Matt completely transformed my relationship with money. His practical approach helped me pay off $15,000 in debt and build my first emergency fund. I finally feel in control of my finances!"</p>
+                    <div class="reviewer-name">- Sarah Johnson</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Working with Matt was the best investment I've made. His budgeting system is simple but incredibly effective. I've saved more in 6 months than I did in the previous 2 years!"</p>
+                    <div class="reviewer-name">- Michael Chen</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Matt's coaching gave me the confidence to start investing. His step-by-step guidance made what seemed overwhelming feel completely manageable. Highly recommend!"</p>
+                    <div class="reviewer-name">- Emily Rodriguez</div>
+                </div>
+            </div>
+            <a href="#" class="leave-review-btn" onclick="showReviewModal()">Leave a Review</a>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <h2>Ready to take control of your finances? Book a free consultation today and start your journey to financial freedom</h2>
+            <button class="book-btn" onclick="showCalendar()">Book Free Consultation</button>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-section" id="calendar">
+        <div class="container">
+            <h2 class="section-title">Select Your Consultation Time</h2>
+            <div class="calendar-grid">
+                <div class="day-column">
+                    <div class="day-header">Monday</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 7:00 AM')">7:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 8:00 AM')">8:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 9:00 AM')">9:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 10:00 AM')">10:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 11:00 AM')">11:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 12:00 PM')">12:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 1:00 PM')">1:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 2:00 PM')">2:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 3:00 PM')">3:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 4:00 PM')">4:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 5:00 PM')">5:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 6:00 PM')">6:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 7:00 PM')">7:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Monday 8:00 PM')">8:00 PM</div>
+                </div>
+                <div class="day-column">
+                    <div class="day-header">Tuesday</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 7:00 AM')">7:00 AM</div>
+                    <div class="time-slot booked">8:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 9:00 AM')">9:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 10:00 AM')">10:00 AM</div>
+                    <div class="time-slot booked">11:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 12:00 PM')">12:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 1:00 PM')">1:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 2:00 PM')">2:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 3:00 PM')">3:00 PM</div>
+                    <div class="time-slot booked">4:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 5:00 PM')">5:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 6:00 PM')">6:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 7:00 PM')">7:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Tuesday 8:00 PM')">8:00 PM</div>
+                </div>
+                <div class="day-column">
+                    <div class="day-header">Wednesday</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 7:00 AM')">7:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 8:00 AM')">8:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 9:00 AM')">9:00 AM</div>
+                    <div class="time-slot booked">10:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 11:00 AM')">11:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 12:00 PM')">12:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 1:00 PM')">1:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 2:00 PM')">2:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 3:00 PM')">3:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 4:00 PM')">4:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 5:00 PM')">5:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 6:00 PM')">6:00 PM</div>
+                    <div class="time-slot booked">7:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Wednesday 8:00 PM')">8:00 PM</div>
+                </div>
+                <div class="day-column">
+                    <div class="day-header">Thursday</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 7:00 AM')">7:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 8:00 AM')">8:00 AM</div>
+                    <div class="time-slot booked">9:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 10:00 AM')">10:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 11:00 AM')">11:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 12:00 PM')">12:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 1:00 PM')">1:00 PM</div>
+                    <div class="time-slot booked">2:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 3:00 PM')">3:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 4:00 PM')">4:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 5:00 PM')">5:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 6:00 PM')">6:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 7:00 PM')">7:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Thursday 8:00 PM')">8:00 PM</div>
+                </div>
+                <div class="day-column">
+                    <div class="day-header">Friday</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 7:00 AM')">7:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 8:00 AM')">8:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 9:00 AM')">9:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 10:00 AM')">10:00 AM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 11:00 AM')">11:00 AM</div>
+                    <div class="time-slot booked">12:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 1:00 PM')">1:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 2:00 PM')">2:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 3:00 PM')">3:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 4:00 PM')">4:00 PM</div>
+                    <div class="time-slot booked">5:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 6:00 PM')">6:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 7:00 PM')">7:00 PM</div>
+                    <div class="time-slot" onclick="selectSlot(this, 'Friday 8:00 PM')">8:00 PM</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <h3>Book Your Free Consultation</h3>
+            <p id="selectedTime"></p>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="confirm-btn">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <h3>Leave a Review</h3>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="reviewerName">Your Name</label>
+                    <input type="text" id="reviewerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <div class="star-rating">
+                        <span class="star" data-rating="1">⭐</span>
+                        <span class="star" data-rating="2">⭐</span>
+                        <span class="star" data-rating="3">⭐</span>
+                        <span class="star" data-rating="4">⭐</span>
+                        <span class="star" data-rating="5">⭐</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reviewText">Your Review</label>
+                    <textarea id="reviewText" rows="4" required style="width: 100%; padding: 0.8rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: var(--card-bg); color: var(--text-color); resize: vertical;"></textarea>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-btn" onclick="closeReviewModal()">Cancel</button>
+                    <button type="submit" class="confirm-btn">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Information</h4>
+                    <p>Email: MattJEllis1@gmail.com</p>
+                    <p>Phone: Coming Soon</p>
+                </div>
+                <div class="footer-section">
+                    <h4>How to Book Free Consultations</h4>
+                    <p>1. Click the "Book Free Consultation" button</p>
+                    <p>2. Select an available time slot</p>
+                    <p>3. Fill out your contact information</p>
+                    <p>4. Receive confirmation email</p>
+                    <p>5. Join the call at your scheduled time</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Me</h4>
+                    <div class="social-links">
+                        <a href="https://youtube.com/@mattellisfinance" target="_blank">📺</a>
+                        <a href="#" target="_blank">📘</a>
+                        <a href="#" target="_blank">🐦</a>
+                        <a href="#" target="_blank">💼</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Power of The Purse - Personal Finance with Matt Ellis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Show Calendar
+        function showCalendar() {
+            const calendarSection = document.getElementById('calendar');
+            calendarSection.style.display = 'block';
+            calendarSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Select Time Slot
+        let selectedSlot = '';
+        function selectSlot(element, timeSlot) {
+            if (element.classList.contains('booked')) {
+                return;
+            }
+            
+            selectedSlot = timeSlot;
+            document.getElementById('selectedTime').textContent = `Selected time: ${timeSlot}`;
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        // Close Booking Modal
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        // Show Review Modal
+        function showReviewModal() {
+            document.getElementById('reviewModal').style.display = 'block';
+        }
+
+        // Close Review Modal
+        function closeReviewModal() {
+            document.getElementById('reviewModal').style.display = 'none';
+        }
+
+        // Star Rating
+        let selectedRating = 0;
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.getAttribute('data-rating'));
+                updateStarDisplay();
+            });
+        });
+
+        function updateStarDisplay() {
+            document.querySelectorAll('.star').forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.style.opacity = '1';
+                } else {
+                    star.style.opacity = '0.3';
+                }
+            });
+        }
+
+        // Form Submissions
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            
+            // In a real application, you would send this data to your server
+            alert(`Thank you ${firstName}! Your consultation for ${selectedSlot} has been booked. You'll receive a confirmation email at ${email} shortly.`);
+            
+            // Mark the slot as booked
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                if (slot.textContent === selectedSlot.split(' ').slice(-2).join(' ')) {
+                    slot.classList.add('booked');
+                    slot.onclick = null;
+                }
+            });
+            
+            closeModal();
+            document.getElementById('bookingForm').reset();
+        });
+
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const reviewerName = document.getElementById('reviewerName').value;
+            const reviewText = document.getElementById('reviewText').value;
+            
+            if (selectedRating === 0) {
+                alert('Please select a star rating.');
+                return;
+            }
+            
+            // In a real application, you would send this data to your server
+            alert(`Thank you ${reviewerName}! Your ${selectedRating}-star review has been submitted and will be displayed after moderation.`);
+            
+            closeReviewModal();
+            document.getElementById('reviewForm').reset();
+            selectedRating = 0;
+            updateStarDisplay();
+        });
+
+        // Scroll to Top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/Hide Back to Top Button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Initialize star rating display
+        updateStarDisplay();
+    </script>
+</body>
+</html>
