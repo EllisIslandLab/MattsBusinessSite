@@ -12,10 +12,13 @@
     display: none;
     overflow-y: auto;
     padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 #booking-container.show {
     display: block;
+    opacity: 1;
 }
 
 #booking-container .container {
@@ -47,4 +50,13 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.container {
+    transform: translateY(50px);
+    transition: transform 0.3s ease;
+}
+
+#booking-container.show .container {
+    transform: translateY(0);
 }
