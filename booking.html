@@ -1,649 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Coach Booking System</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- booking-content.html -->
+<div class="container">
+    <div class="header">
+        <h1>Financial Coaching Sessions</h1>
+        <p>Book your one-hour consultation with our certified financial coach</p>
+    </div>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f9fafb;
-            color: #374151;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            min-height: 100vh;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #6b7280;
-            font-size: 1.1rem;
-        }
-
-        .booking-card {
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .calendar-header {
-            background: #2563eb;
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .calendar-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-button {
-            background: #1d4ed8;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .nav-button:hover:not(:disabled) {
-            background: #1e40af;
-        }
-
-        .nav-button:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .date-display {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .date-display svg {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
-
-        .date-display h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .booking-content {
-            padding: 1.5rem;
-        }
-
-        .booking-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 1024px) {
-            .booking-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .section-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .section-title svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
-
-        .time-slots {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-        }
-
-        .time-slot {
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #d1d5db;
-            background: white;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .time-slot:hover:not(.booked) {
-            background: #f9fafb;
-            border-color: #93c5fd;
-        }
-
-        .time-slot.selected {
-            background: #dbeafe;
-            border-color: #3b82f6;
-            color: #1d4ed8;
-        }
-
-        .time-slot.booked {
-            background: #e5e7eb;
-            color: #9ca3af;
-            cursor: not-allowed;
-            border-color: #d1d5db;
-        }
-
-        .booked-text {
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-        }
-
-        .booking-form {
-            space-y: 1rem;
-        }
-
-        .selected-time {
-            background: #eff6ff;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .selected-time p {
-            color: #1e40af;
-            font-weight: 500;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .confirm-button {
-            width: 100%;
-            background: #2563eb;
-            color: white;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 0.375rem;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .confirm-button:hover:not(:disabled) {
-            background: #1d4ed8;
-        }
-
-        .confirm-button:disabled {
-            background: #d1d5db;
-            cursor: not-allowed;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .empty-state svg {
-            width: 3rem;
-            height: 3rem;
-            color: #d1d5db;
-            margin: 0 auto 1rem;
-        }
-
-        .empty-state p {
-            color: #6b7280;
-        }
-
-        .past-date-message {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .past-date-message p {
-            color: #6b7280;
-            font-size: 1.125rem;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .modal-icon {
-            width: 4rem;
-            height: 4rem;
-            color: #10b981;
-            margin: 0 auto 1rem;
-        }
-
-        .modal h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .modal p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-button {
-            background: #2563eb;
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border: none;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .modal-button:hover {
-            background: #1d4ed8;
-        }
-
-        .footer {
-            margin-top: 2rem;
-            text-align: center;
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        .footer p {
-            margin-bottom: 0.25rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>Financial Coaching Sessions</h1>
-            <p>Book your one-hour consultation with our certified financial coach</p>
+    <div class="booking-card">
+        <!-- Calendar Navigation -->
+        <div class="calendar-header">
+            <div class="calendar-nav">
+                <button class="nav-button" id="prevDay">← Previous Day</button>
+                
+                <div class="date-display">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <h2 id="currentDate"></h2>
+                </div>
+                
+                <button class="nav-button" id="nextDay">Next Day →</button>
+            </div>
         </div>
 
-        <div class="booking-card">
-            <!-- Calendar Navigation -->
-            <div class="calendar-header">
-                <div class="calendar-nav">
-                    <button class="nav-button" id="prevDay">← Previous Day</button>
-                    
-                    <div class="date-display">
+        <div class="booking-content">
+            <div id="pastDateMessage" class="past-date-message" style="display: none;">
+                <p>Cannot book sessions for past dates. Please select a future date.</p>
+            </div>
+
+            <div id="bookingGrid" class="booking-grid">
+                <!-- Time Slots Section -->
+                <div>
+                    <h3 class="section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
                         </svg>
-                        <h2 id="currentDate"></h2>
-                    </div>
+                        Available Time Slots
+                    </h3>
                     
-                    <button class="nav-button" id="nextDay">Next Day →</button>
-                </div>
-            </div>
-
-            <div class="booking-content">
-                <div id="pastDateMessage" class="past-date-message" style="display: none;">
-                    <p>Cannot book sessions for past dates. Please select a future date.</p>
+                    <div class="time-slots" id="timeSlots"></div>
                 </div>
 
-                <div id="bookingGrid" class="booking-grid">
-                    <!-- Time Slots Section -->
-                    <div>
-                        <h3 class="section-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12,6 12,12 16,14"></polyline>
-                            </svg>
-                            Available Time Slots
-                        </h3>
-                        
-                        <div class="time-slots" id="timeSlots"></div>
+                <!-- Booking Form Section -->
+                <div>
+                    <h3 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Book Your Session
+                    </h3>
+
+                    <div id="emptyState" class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
+                        </svg>
+                        <p>Select a time slot to book your session</p>
                     </div>
 
-                    <!-- Booking Form Section -->
-                    <div>
-                        <h3 class="section-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            Book Your Session
-                        </h3>
+                    <div id="bookingForm" class="booking-form" style="display: none;">
+                        <div id="selectedTimeDisplay" class="selected-time"></div>
 
-                        <div id="emptyState" class="empty-state">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12,6 12,12 16,14"></polyline>
-                            </svg>
-                            <p>Select a time slot to book your session</p>
+                        <div class="form-group">
+                            <label class="form-label" for="clientName">Full Name *</label>
+                            <input type="text" id="clientName" class="form-input" placeholder="Enter your full name">
                         </div>
 
-                        <div id="bookingForm" class="booking-form" style="display: none;">
-                            <div id="selectedTimeDisplay" class="selected-time"></div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="clientName">Full Name *</label>
-                                <input type="text" id="clientName" class="form-input" placeholder="Enter your full name">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label" for="clientEmail">Email Address *</label>
-                                <input type="email" id="clientEmail" class="form-input" placeholder="Enter your email address">
-                            </div>
-
-                            <button id="confirmBooking" class="confirm-button" disabled>
-                                Confirm Booking
-                            </button>
+                        <div class="form-group">
+                            <label class="form-label" for="clientEmail">Email Address *</label>
+                            <input type="email" id="clientEmail" class="form-input" placeholder="Enter your email address">
                         </div>
+
+                        <button id="confirmBooking" class="confirm-button" disabled>
+                            Confirm Booking
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Confirmation Modal -->
-        <div id="confirmationModal" class="modal">
-            <div class="modal-content">
-                <svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22,4 12,14.01 9,11.01"></polyline>
-                </svg>
-                <h3>Booking Confirmed!</h3>
-                <p>Your financial coaching session has been successfully booked. You'll receive a confirmation email shortly.</p>
-                <button class="modal-button" id="closeModal">Close</button>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p>Session Duration: 1 hour | Available: Monday-Friday, 9 AM - 5 PM</p>
-            <p>Questions? Contact us at info@financialcoaching.com</p>
         </div>
     </div>
 
-    <script>
-        class BookingSystem {
-            constructor() {
-                this.selectedDate = new Date();
-                this.bookedSlots = JSON.parse(localStorage.getItem('bookedSlots') || '{}');
-                this.selectedSlot = null;
-                this.timeSlots = this.generateTimeSlots();
-                
-                this.initializeElements();
-                this.attachEventListeners();
-                this.updateDisplay();
-            }
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22,4 12,14.01 9,11.01"></polyline>
+            </svg>
+            <h3>Booking Confirmed!</h3>
+            <p>Your financial coaching session has been successfully booked. You'll receive a confirmation email shortly.</p>
+            <button class="modal-button" id="closeModal">Close</button>
+        </div>
+    </div>
 
-            initializeElements() {
-                this.elements = {
-                    currentDate: document.getElementById('currentDate'),
-                    prevDay: document.getElementById('prevDay'),
-                    nextDay: document.getElementById('nextDay'),
-                    timeSlots: document.getElementById('timeSlots'),
-                    emptyState: document.getElementById('emptyState'),
-                    bookingForm: document.getElementById('bookingForm'),
-                    selectedTimeDisplay: document.getElementById('selectedTimeDisplay'),
-                    clientName: document.getElementById('clientName'),
-                    clientEmail: document.getElementById('clientEmail'),
-                    confirmBooking: document.getElementById('confirmBooking'),
-                    confirmationModal: document.getElementById('confirmationModal'),
-                    closeModal: document.getElementById('closeModal'),
-                    pastDateMessage: document.getElementById('pastDateMessage'),
-                    bookingGrid: document.getElementById('bookingGrid')
-                };
-            }
-
-            attachEventListeners() {
-                const self = this;
-                this.elements.prevDay.addEventListener('click', function() { self.navigateDate(-1); });
-                this.elements.nextDay.addEventListener('click', function() { self.navigateDate(1); });
-                this.elements.confirmBooking.addEventListener('click', function() { self.handleBooking(); });
-                this.elements.closeModal.addEventListener('click', function() { self.closeModal(); });
-                
-                this.elements.clientName.addEventListener('input', function() { self.validateForm(); });
-                this.elements.clientEmail.addEventListener('input', function() { self.validateForm(); });
-            }
-
-            generateTimeSlots() {
-                const slots = [];
-                for (let hour = 9; hour < 17; hour++) {
-                    const time = `${hour > 12 ? hour - 12 : hour}:00 ${hour >= 12 ? 'PM' : 'AM'}`;
-                    const timeKey = `${hour}:00`;
-                    slots.push({ time, timeKey, hour });
-                }
-                return slots;
-            }
-
-            formatDate(date) {
-                return date.toISOString().split('T')[0];
-            }
-
-            formatDisplayDate(date) {
-                return date.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            }
-
-            isPastDate(date) {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const checkDate = new Date(date);
-                checkDate.setHours(0, 0, 0, 0);
-                return checkDate < today;
-            }
-
-            isSlotBooked(date, timeKey) {
-                const dateKey = this.formatDate(date);
-                return this.bookedSlots[dateKey] && this.bookedSlots[dateKey].includes(timeKey);
-            }
-
-            navigateDate(direction) {
-                const newDate = new Date(this.selectedDate);
-                newDate.setDate(this.selectedDate.getDate() + direction);
-                
-                // Don't allow navigation to past dates
-                if (direction === -1 && this.isPastDate(newDate)) {
-                    return;
-                }
-                
-                this.selectedDate = newDate;
-                this.selectedSlot = null;
-                this.updateDisplay();
-            }
-
-            selectTimeSlot(slot) {
-                if (this.isSlotBooked(this.selectedDate, slot.timeKey)) {
-                    return;
-                }
-                
-                this.selectedSlot = slot;
-                this.updateDisplay();
-            }
-
-            handleBooking() {
-                if (!this.selectedSlot || !this.elements.clientName.value || !this.elements.clientEmail.value) {
-                    return;
-                }
-
-                const dateKey = this.formatDate(this.selectedDate);
-                
-                if (!this.bookedSlots[dateKey]) {
-                    this.bookedSlots[dateKey] = [];
-                }
-                
-                this.bookedSlots[dateKey].push(this.selectedSlot.timeKey);
-                localStorage.setItem('bookedSlots', JSON.stringify(this.bookedSlots));
-                
-                this.selectedSlot = null;
-                this.elements.clientName.value = '';
-                this.elements.clientEmail.value = '';
-                
-                this.showConfirmationModal();
-                this.updateDisplay();
-            }
-
-            showConfirmationModal() {
-                this.elements.confirmationModal.classList.add('show');
-            }
-
-            closeModal() {
-                this.elements.confirmationModal.classList.remove('show');
-            }
-
-            validateForm() {
-                const hasName = this.elements.clientName.value.trim() !== '';
-                const hasEmail = this.elements.clientEmail.value.trim() !== '';
-                this.elements.confirmBooking.disabled = !hasName || !hasEmail;
-            }
-
-            updateDisplay() {
-                // Update date display
-                this.elements.currentDate.textContent = this.formatDisplayDate(this.selectedDate);
-                
-                // Update navigation buttons
-                const prevDate = new Date(this.selectedDate);
-                prevDate.setDate(this.selectedDate.getDate() - 1);
-                this.elements.prevDay.disabled = this.isPastDate(prevDate);
-                
-                // Check if current date is in the past
-                const isPast = this.isPastDate(this.selectedDate);
-                
-                if (isPast) {
-                    this.elements.pastDateMessage.style.display = 'block';
-                    this.elements.bookingGrid.style.display = 'none';
-                    return;
-                } else {
-                    this.elements.pastDateMessage.style.display = 'none';
-                    this.elements.bookingGrid.style.display = 'grid';
-                }
-                
-                // Update time slots
-                this.elements.timeSlots.innerHTML = '';
-                const self = this;
-                this.timeSlots.forEach(function(slot) {
-                    const button = document.createElement('button');
-                    button.className = 'time-slot';
-                    
-                    const isBooked = self.isSlotBooked(self.selectedDate, slot.timeKey);
-                    const isSelected = self.selectedSlot && self.selectedSlot.timeKey === slot.timeKey;
-                    
-                    if (isBooked) {
-                        button.classList.add('booked');
-                        button.innerHTML = slot.time + '<div class="booked-text">Booked</div>';
-                        button.disabled = true;
-                    } else {
-                        button.textContent = slot.time;
-                        button.addEventListener('click', function() {
-                            self.selectTimeSlot(slot);
-                        });
-                        
-                        if (isSelected) {
-                            button.classList.add('selected');
-                        }
-                    }
-                    
-                    self.elements.timeSlots.appendChild(button);
-                });
-                
-                // Update booking form
-                if (this.selectedSlot) {
-                    this.elements.emptyState.style.display = 'none';
-                    this.elements.bookingForm.style.display = 'block';
-                    this.elements.selectedTimeDisplay.innerHTML = 
-                        '<p><strong>Selected Time:</strong> ' + 
-                        this.formatDisplayDate(this.selectedDate) + 
-                        ' at ' + this.selectedSlot.time + '</p>';
-                } else {
-                    this.elements.emptyState.style.display = 'block';
-                    this.elements.bookingForm.style.display = 'none';
-                }
-                
-                this.validateForm();
-            }
-        }
-
-        // Initialize the booking system when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new BookingSystem();
-        });
-    </script>
-</body>
-</html>
+    <!-- Close Button -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="closeBooking" style="background: #6b7280; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            Close Booking System
+        </button>
+    </div>
+</div>
