@@ -765,65 +765,25 @@
     <section class="cta" id="cta">
         <div class="container">
             <h2>Ready to take control of your finances? Book a free consultation today and start your journey to financial freedom</h2>
-            <button class="book-btn" onclick="showCalendar()">Book Free Consultation</button>
+            <!-- Button to show booking -->
+            <button id="show-booking">Book a Session</button>
+            <div id="booking-container" style="display: none;"></div>
+
+            <script>
+            document.getElementById('show-booking').addEventListener('click', function() {
+                // Load booking system dynamically
+                fetch('booking.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('booking-container').innerHTML = html;
+                        document.getElementById('booking-container').style.display = 'block';
+                        // Initialize booking system
+                        new BookingSystem();
+                    });
+            });
+            </script>
         </div>
     </section>
-
-    <!-- Calendar Section -->
-    <section class="calendar-section" id="calendar">
-        <div class="container">
-            <h2 class="section-title">Select Your Consultation Time</h2>
-            <div class="calendar-container">
-                <div class="date-picker">
-                    <h3>Choose a Date</h3>
-                    <div class="calendar-nav">
-                        <button onclick="changeMonth(-1)">‹</button>
-                        <div class="month-year" id="monthYear"></div>
-                        <button onclick="changeMonth(1)">›</button>
-                    </div>
-                    <div class="calendar-grid" id="calendarGrid">
-                        <!-- Calendar will be populated here -->
-                    </div>
-                </div>
-                <div class="time-picker">
-                    <h3>Available Times</h3>
-                    <div class="time-slots" id="timeSlots">
-                        <!-- Time slots will be populated here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Booking Modal -->
-    <div class="modal" id="bookingModal">
-        <div class="modal-content">
-            <h3>Book Your Free Consultation</h3>
-            <p id="selectedDateTime"></p>
-            <form id="bookingForm">
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" required>
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="confirm-btn">Confirm Booking</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Review Modal -->
     <div class="modal" id="reviewModal">
