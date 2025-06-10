@@ -28,3 +28,9 @@ function closeBookingSystem() {
     // Clean up the instance
     window.bookingSystemInstance = null;
 }
+
+document.getElementById('booking-container').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeBookingSystem();
+    }
+});
