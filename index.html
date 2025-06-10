@@ -767,21 +767,42 @@
             <h2>Ready to take control of your finances? Book a free consultation today and start your journey to financial freedom</h2>
             <!-- Button to show booking -->
             <button id="show-booking">Book a Session</button>
-            <div id="booking-container" style="display: none;"></div>
-
-            <script>
-            document.getElementById('show-booking').addEventListener('click', function() {
-                // Load booking system dynamically
-                fetch('booking.html')
-                    .then(response => response.text())
-                    .then(html => {
-                        document.getElementById('booking-container').innerHTML = html;
-                        document.getElementById('booking-container').style.display = 'block';
-                        // Initialize booking system
-                        new BookingSystem();
-                    });
-            });
-            </script>
+    
+    <!-- Container for the booking system -->
+    <div id="booking-container"></div>
+    
+    <!-- Your existing scripts -->
+    <script src="booking.js"></script>
+    <script>
+        // Dynamic loading script
+        document.getElementById('show-booking').addEventListener('click', function() {
+            loadBookingSystem();
+        });
+        
+        function loadBookingSystem() {
+            const container = document.getElementById('booking-container');
+            
+            // Show loading state
+            container.innerHTML = '<div class="booking-loading"><div class="spinner"></div><p>Loading booking system...</p></div>';
+            container.classList.add('show');
+            
+            // Load the booking content
+            fetch('booking-content.html')
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Failed to load booking system');
+                    }
+                    return response.text();
+                })
+                .then(function(html) {
+                    container.innerHTML = html;
+                    initializeBookingSystem();
+                })
+                .catch(function(error) {
+                    console.error('Error loading booking system:', error);
+                    container.innerHTML = '<div class="booking-loading"><p>Error loading booking system. Please try again.</p><button onclick="closeBookingSystem()">Close</button></div>';
+                });
+        }
         </div>
     </section>
 
